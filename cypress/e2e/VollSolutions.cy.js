@@ -22,7 +22,7 @@ describe('Testes Banco', () => {
 
   it('Realizando Depositos de 1000 reais', () => {
     cy.visit('/vaga-qa/')
-    cy.get('.py-2').click()
+    cy.get(selectorsList.confirmField).click()
     cy.get(selectorsList.accountsGeneric).eq(0).click()
     cy.get(selectorsList.valueField).eq(0).type('1000')
     cy.get(selectorsList.confirmField).eq(0).click()
@@ -31,7 +31,7 @@ describe('Testes Banco', () => {
 
   it('Erro ao Realizar Depositos Negativos', () => {
     cy.visit('/vaga-qa/')
-    cy.get('.py-2').click()
+    cy.get(selectorsList.confirmField).click()
     cy.get(selectorsList.accountsGeneric).eq(0).click()
     cy.get(selectorsList.valueField).eq(0).type('-1000')
     cy.get(selectorsList.confirmField).eq(0).click()
@@ -40,7 +40,7 @@ describe('Testes Banco', () => {
   
   it('Realizando Saque com Saldo Disponível', () => {
     cy.visit('/vaga-qa/')
-    cy.get('.py-2').click()
+    cy.get(selectorsList.confirmField).click()
     cy.get(selectorsList.accountsGeneric).eq(0).click()
     cy.get(selectorsList.valueField).eq(1).type('1000')
     cy.get(selectorsList.confirmField).eq(1).click()
@@ -49,7 +49,7 @@ describe('Testes Banco', () => {
     
   it('Erro ao Realizar Saque sem Saldo Disponível', () => {
     cy.visit('/vaga-qa/')
-    cy.get('.py-2').click()
+    cy.get(selectorsList.confirmField).click()
     cy.get(selectorsList.accountsGeneric).eq(0).click()
     cy.get(selectorsList.valueField).eq(1).type('8000')
     cy.get(selectorsList.confirmField).eq(1).click()
@@ -58,16 +58,16 @@ describe('Testes Banco', () => {
       
   it('Erro ao Realizar Saque com Saldo Negativo', () => {
     cy.visit('/vaga-qa/')
-    cy.get('.py-2').click()
+    cy.get(selectorsList.confirmField).click()
     cy.get(selectorsList.accountsGeneric).eq(0).click()
     cy.get(selectorsList.valueField).eq(1).type('-8000')
     cy.get(selectorsList.confirmField).eq(1).click()
     cy.get('body').contains('Não é possível realizar um saque com valor negativo')
     })
   
-  it('Realizando transferência com Sucesso para uma conta existe e com saldo', () => {
+  it('Realizando transferência com Sucesso para uma conta existente e com saldo', () => {
     cy.visit('/vaga-qa/')
-    cy.get('.py-2').click()
+    cy.get(selectorsList.confirmField).click()
     cy.get(selectorsList.accountsGeneric).eq(0).click()
     cy.get(selectorsList.textField).type('5678-9')
     cy.get(selectorsList.valueField).eq(2).type('200')
@@ -77,16 +77,16 @@ describe('Testes Banco', () => {
 
   it('Erro ao realizar transferência para uma conta existente porém sem saldo', () => {
     cy.visit('/vaga-qa/')
-    cy.get('.py-2').click()
+    cy.get(selectorsList.confirmField).click()
     cy.get(selectorsList.accountsGeneric).eq(0).click()
     cy.get(selectorsList.valueField).eq(2).type('5000')
     cy.get(selectorsList.confirmField).eq(2).click()
     cy.get('body').contains('Saldo insuficiente')
     })
 
-  it('Erro ao realizar transferência para uma conta existente sem saldo', () => {
+  it('Erro ao realizar transferência para uma conta inexistente com saldo', () => {
     cy.visit('/vaga-qa/')
-    cy.get('.py-2').click()
+    cy.get(selectorsList.confirmField).click()
     cy.get(selectorsList.accountsGeneric).eq(0).click()
     cy.get(selectorsList.textField).type('9999-9')
     cy.get(selectorsList.valueField).eq(2).type('200')
@@ -94,13 +94,13 @@ describe('Testes Banco', () => {
     cy.get('body').contains('Esta conta não existe')
     })
 
-  it('Erro ao realizar transferência para uma conta inexistente', () => {
+  it('Erro ao realizar transferência para uma conta existente com valor negativo', () => {
     cy.visit('/vaga-qa/')
-    cy.get('.py-2').click()
+    cy.get(selectorsList.confirmField).click()
     cy.get(selectorsList.accountsGeneric).eq(0).click()
-    cy.get(selectorsList.textField).type('9999-9')
-    cy.get(selectorsList.valueField).eq(2).type('200')
+    cy.get(selectorsList.textField).type('5678-9')
+    cy.get(selectorsList.valueField).eq(2).type('-2000')
     cy.get(selectorsList.confirmField).eq(2).click()
-    cy.get('body').contains('Saldo insuficiente')
+    cy.get('body').contains('Não é possível realizar transferências com valor negativo')
     })
 })
