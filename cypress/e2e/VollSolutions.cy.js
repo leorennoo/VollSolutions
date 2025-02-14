@@ -9,7 +9,7 @@ describe('Testes Banco', () => {
     textField: "[type='text']"
   } 
 
-  it.skip('Entrando e saindo das contas disponiveis', () => {
+  it('Entrando e saindo das contas disponiveis', () => {
     cy.visit('/vaga-qa/')
     cy.get(selectorsList.confirmField).click()
     cy.get(selectorsList.accountsGeneric).eq(0).click()
